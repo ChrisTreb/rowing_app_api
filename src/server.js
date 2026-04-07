@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 import usersRoutes from './routes/users.js';
+import clubsRoutes from './routes/clubs.js';
 import eventsRoutes from './routes/events.js';
 import tracksRoutes from './routes/tracks.js';
 import racesRoutes from './routes/races.js';
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/users', usersRoutes);
+app.use('/clubs', clubsRoutes);
 app.use('/events', eventsRoutes);
 app.use('/tracks', tracksRoutes);
 app.use('/races', racesRoutes);
