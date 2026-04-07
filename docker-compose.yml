@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: express_api
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@192.168.1.33:5432/rowing
+      PORT: 3000
+    volumes:
+      - .:/app
+    command: npx nodemon src/server.js
