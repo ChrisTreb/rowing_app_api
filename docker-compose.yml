@@ -8,7 +8,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@192.168.1.33:5432/rowing
+      DATABASE_URL: postgresql://postgres:postgres@192.168.1.33:5432/map_tracker
       PORT: 3000
     volumes:
       - .:/app
