@@ -77,5 +77,5 @@ temp/
 uploads/
 
 # Misc
-api_structure.md
-database_configuration.sql
+api_structure/
+database_configuration/
