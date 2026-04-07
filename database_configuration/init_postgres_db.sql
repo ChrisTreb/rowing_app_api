@@ -123,6 +123,7 @@ CREATE TABLE race_participant_position (
 
 CREATE INDEX idx_position_participant ON race_participant_position(rpp_participant_id);
 CREATE INDEX idx_position_time ON race_participant_position(rpp_timestamp);
+CREATE INDEX idx_position_participant_time ON race_participant_position (rpp_participant_id, rpp_timestamp DESC);
 
 ---------------------
 -- 9. DATA INIT

@@ -25,7 +25,7 @@ export const getPositionsByParticipant = async (req, res) => {
         const result = await pool.query(
             `SELECT * FROM race_participant_position
        WHERE rpp_participant_id = $1
-       ORDER BY rpp_timestamp ASC`,
+       ORDER BY rpp_timestamp ASC LIMIT 1000`,
             [req.params.participantId]
         );
 
