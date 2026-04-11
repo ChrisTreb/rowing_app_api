@@ -32,3 +32,45 @@ export const getParticipantsByRace = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// UPDATE
+export const updateParticipant = async (req, res) => {
+    try {
+        const { bib, name, color } = req.body;
+        const result = await pool.query(
+            `UPDATE race_participant SET
+                rp_bib = $1,
+                rp_name = $2,
+                rp_color = $3
+            WHERE rp_id = $4
+            RETURNING *`,
+            [bib, name, color, req.params.id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Participant not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// DELETE
+export const deleteParticipant = async (req, res) => {
+    try {
+        const result = await pool.query(
+            `DELETE FROM race_participant WHERE rp_id = $1 RETURNING *`,
+            [req.params.id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Participant not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};

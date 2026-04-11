@@ -57,3 +57,44 @@ export const createClub = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// UPDATE
+export const updateClub = async (req, res) => {
+    try {
+        const { name, nickname } = req.body;
+
+        const result = await pool.query(
+            `UPDATE rowing_club
+       SET rc_name = $1, rc_nickname = $2
+       WHERE rc_id = $3
+       RETURNING *`,
+            [name, nickname, req.params.id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Club not found' });
+        }
+
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+};
+
+// DELETE
+export const deleteClub = async (req, res) => {
+    try {
+        const result = await pool.query(
+            'DELETE FROM rowing_club WHERE rc_id = $1 RETURNING *',
+            [req.params.id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Club not found' });
+        }
+        res.json({ message: 'Club deleted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+};

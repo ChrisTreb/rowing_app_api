@@ -2,69 +2,69 @@ import { pool } from '../db.js';
 
 // CREATE EVENT
 export const createEvent = async (req, res) => {
-    try {
-        const {
-            user_id,
-            name,
-            visibility,
-            start_at,
-            end_at,
-            latitude,
-            longitude,
-            zoom,
-            map_layer
-        } = req.body;
+  try {
+    const {
+      user_id,
+      name,
+      visibility,
+      start_at,
+      end_at,
+      latitude,
+      longitude,
+      zoom,
+      map_layer
+    } = req.body;
 
-        const result = await pool.query(
-            `INSERT INTO race_event (
+    const result = await pool.query(
+      `INSERT INTO race_event (
         re_user_id, re_name, re_visibility,
         re_start_at, re_end_at,
         re_latitude, re_longitude, re_zoom, re_map_layer
       )
       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
       RETURNING *`,
-            [
-                user_id,
-                name,
-                visibility,
-                start_at,
-                end_at,
-                latitude,
-                longitude,
-                zoom,
-                map_layer
-            ]
-        );
+      [
+        user_id,
+        name,
+        visibility,
+        start_at,
+        end_at,
+        latitude,
+        longitude,
+        zoom,
+        map_layer
+      ]
+    );
 
-        res.status(201).json(result.rows[0]);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // GET EVENTS
 export const getEvents = async (req, res) => {
-    try {
-        const result = await pool.query(`
+  try {
+    const result = await pool.query(`
       SELECT re.*, u.usr_name
       FROM race_event re
       JOIN app_user u ON re.re_user_id = u.usr_id
       ORDER BY re.re_start_at DESC
     `);
 
-        res.json(result.rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // GET /events/:id/full - Get full event details with races, participants, and last positions
 export const getFullEvent = async (req, res) => {
-    try {
-        const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-        const result = await pool.query(
-            `
+    const result = await pool.query(
+      `
       SELECT json_build_object(
         'event', re,
         'races', (
@@ -100,16 +100,84 @@ export const getFullEvent = async (req, res) => {
       FROM race_event re
       WHERE re.re_id = $1
       `,
-            [id]
-        );
+      [id]
+    );
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Event not found' });
-        }
-
-        res.json(result.rows[0].data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: err.message });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
     }
+
+    res.json(result.rows[0].data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
 };
+
+// GET ONE
+export const getEventById = async (req, res) => {
+  try {
+    const result = await pool.query(
+      'SELECT * FROM race_event WHERE re_id = $1',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// UPDATE
+export const updateEvent = async (req, res) => {
+  try {
+    const {
+      name,
+      visibility,
+      start_at,
+      end_at,
+      latitude,
+      longitude,
+      zoom,
+      map_layer
+    } = req.body;
+
+    const result = await pool.query(
+      `UPDATE race_event SET
+        re_name = $1,
+        re_visibility = $2,
+        re_start_at = $3,
+        re_end_at = $4,
+        re_latitude = $5,
+        re_longitude = $6,
+        re_zoom = $7,
+        re_map_layer = $8
+      WHERE re_id = $9
+      RETURNING *`,
+      [
+        name,
+        visibility,
+        start_at,
+        end_at,
+        latitude,
+        longitude,
+        zoom,
+        map_layer,
+        req.params.id
+      ]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
