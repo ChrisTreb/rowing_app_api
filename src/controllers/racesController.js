@@ -145,3 +145,20 @@ export const getRacesWithParticipantsDataByEvent = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+// DELETE
+export const deleteRace = async (req, res) => {
+    try {
+        const result = await pool.query(
+            'DELETE FROM race WHERE ra_id = $1 RETURNING *',
+            [req.params.id]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: 'Race not found' });
+        }
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: err.message });
+    }
+};
