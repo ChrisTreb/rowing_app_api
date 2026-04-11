@@ -10,12 +10,18 @@ import racesRoutes from './routes/races.js';
 import participantsRoutes from './routes/participants.js';
 import positionsRoutes from './routes/positions.js';
 
+import { swaggerDocs } from './swagger.js';
+
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+/* ===================== */
+/* ROUTES */
+/* ===================== */
 
 app.use('/users', usersRoutes);
 app.use('/clubs', clubsRoutes);
@@ -33,4 +39,6 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
+
+    swaggerDocs(app, PORT);
 });
