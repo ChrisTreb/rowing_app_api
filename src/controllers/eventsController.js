@@ -181,3 +181,19 @@ export const updateEvent = async (req, res) => {
   }
 };
 
+// DELETE
+export const deleteEvent = async (req, res) => {
+  try {
+    const result = await pool.query(
+      'DELETE FROM race_event WHERE re_id = $1 RETURNING *',
+      [req.params.id]
+    );
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Event not found' });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
