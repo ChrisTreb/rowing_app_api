@@ -31,7 +31,7 @@ const router = express.Router();
  *              name:
  *                type: string
  *              rc_id:
- *                type: string
+ *                type: integer
  *    responses:
  *      201:
  *        description: Utilisateur créé avec succès
@@ -91,7 +91,7 @@ router.get('/:id', getUserById);
  *              name:
  *                type: string
  *              rc_id:
- *                type: string
+ *                type: integer
  *     responses:
  *       200:
  *         description: Utilisateur mis à jour avec succès

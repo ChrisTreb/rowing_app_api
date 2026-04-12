@@ -23,13 +23,13 @@ const router = express.Router();
  *             type: object
  *             properties:
  *               participant_id:
- *                 type: string
+ *                 type: integer
  *               latitude:
- *                 type: double
+ *                 type: number
  *               longitude:
- *                 type: double
+ *                 type: number
  *               timestamp:
- *                 type: timpestamp
+ *                 type: integer
  *                 format: date-time
  *     responses:
  *       201:

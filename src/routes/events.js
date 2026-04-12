@@ -30,15 +30,15 @@ const router = express.Router();
  *               visiblity:
  *                 type: integer
  *               start_at:
- *                 type: timestamp
- *                 format: date
+ *                 type: integer
+ *                 format: date-time
  *               end_at:
- *                 type: timestamp
- *                 format: date
+ *                 type: integer
+ *                 format: date-time
  *               latitude:
- *                 type: double
+ *                 type: number
  *               longitude:
- *                 type: double
+ *                 type: number
  *               zoom:
  *                 type: integer
  *               map_layer:
@@ -130,15 +130,15 @@ router.get('/:id/full', getFullEvent);
  *               visiblity:
  *                 type: integer
  *               start_at:
- *                 type: timestamp
- *                 format: date
+ *                 type: integer
+ *                 format: date-time
  *               end_at:
- *                 type: timestamp
+ *                 type: integer
  *                 format: date-time
  *               latitude:
- *                 type: double
+ *                 type: number
  *               longitude:
- *                 type: double
+ *                 type: number
  *               zoom:
  *                 type: integer
  *               map_layer:
