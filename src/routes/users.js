@@ -22,15 +22,15 @@ const router = express.Router();
  *          schema:
  *            type: object
  *            properties:
- *              usr_google_id:
+ *              google_id:
  *                type: string
- *              usr_email:
+ *              email:
  *                type: string
- *              usr_apikey:
+ *              apikey:
  *                type: string
- *              usr_name:
+ *              name:
  *                type: string
- *              usr_rcId:
+ *              rc_id:
  *                type: string
  *    responses:
  *      201:
@@ -82,15 +82,15 @@ router.get('/:id', getUserById);
  *         schema:
  *            type: object
  *            properties:
- *              usr_google_id:
+ *              google_id:
  *                type: string
- *              usr_email:
+ *              email:
  *                type: string
- *              usr_apikey:
+ *              apikey:
  *                type: string
- *              usr_name:
+ *              name:
  *                type: string
- *              usr_rcId:
+ *              rc_id:
  *                type: string
  *     responses:
  *       200:
