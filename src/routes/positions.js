@@ -30,7 +30,6 @@ const router = express.Router();
  *                 type: number
  *               timestamp:
  *                 type: integer
- *                 format: date-time
  *     responses:
  *       201:
  *         description: Position ajoutée avec succès

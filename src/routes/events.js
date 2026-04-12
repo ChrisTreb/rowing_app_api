@@ -24,17 +24,15 @@ const router = express.Router();
  *             type: object
  *             properties:
  *               userId:
- *                 type: string
+ *                 type: integer
  *               name:
  *                 type: string
  *               visiblity:
  *                 type: integer
  *               start_at:
  *                 type: integer
- *                 format: date-time
  *               end_at:
  *                 type: integer
- *                 format: date-time
  *               latitude:
  *                 type: number
  *               longitude:
@@ -124,17 +122,15 @@ router.get('/:id/full', getFullEvent);
  *             type: object
  *             properties:
  *               userId:
- *                 type: string
+ *                 type: integer
  *               name:
  *                 type: string
  *               visiblity:
  *                 type: integer
  *               start_at:
  *                 type: integer
- *                 format: date-time
  *               end_at:
  *                 type: integer
- *                 format: date-time
  *               latitude:
  *                 type: number
  *               longitude:
