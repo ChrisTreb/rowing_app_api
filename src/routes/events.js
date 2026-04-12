@@ -23,20 +23,20 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               user_id:
  *                 type: integer
  *               name:
  *                 type: string
  *               visiblity:
  *                 type: integer
  *               start_at:
- *                 type: integer
+ *                 type: string
  *               end_at:
- *                 type: integer
+ *                 type: string
  *               latitude:
- *                 type: number
+ *                 type: string
  *               longitude:
- *                 type: number
+ *                 type: string
  *               zoom:
  *                 type: integer
  *               map_layer:
@@ -121,20 +121,20 @@ router.get('/:id/full', getFullEvent);
  *           schema:
  *             type: object
  *             properties:
- *               userId:
+ *               user_id:
  *                 type: integer
  *               name:
  *                 type: string
  *               visiblity:
  *                 type: integer
  *               start_at:
- *                 type: integer
+ *                 type: string
  *               end_at:
- *                 type: integer
+ *                 type: string
  *               latitude:
- *                 type: number
+ *                 type: string
  *               longitude:
- *                 type: number
+ *                 type: string
  *               zoom:
  *                 type: integer
  *               map_layer:

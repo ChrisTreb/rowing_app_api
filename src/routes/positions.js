@@ -25,11 +25,11 @@ const router = express.Router();
  *               participant_id:
  *                 type: integer
  *               latitude:
- *                 type: number
+ *                 type: string
  *               longitude:
- *                 type: number
+ *                 type: string
  *               timestamp:
- *                 type: integer
+ *                 type: string
  *     responses:
  *       201:
  *         description: Position ajoutée avec succès
