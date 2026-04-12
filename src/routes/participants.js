@@ -21,9 +21,15 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
+ *               race_id:
+ *                 type: integer
+ *               bib:
+ *                 type: string
  *               name:
  *                 type: string
- *               raceId:
+ *               color:
+ *                type: string
+ *               key:
  *                 type: string
  *     responses:
  *       201:
@@ -70,7 +76,15 @@ router.get('/race/:raceId', getParticipantsByRace);
  *           schema:
  *             type: object
  *             properties:
+ *               race_id:
+ *                 type: integer
+ *               bib:
+ *                 type: string
  *               name:
+ *                 type: string
+ *               color:
+ *                type: string
+ *               key:
  *                 type: string
  *     responses:
  *       200:

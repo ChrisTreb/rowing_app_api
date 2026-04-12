@@ -22,10 +22,16 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
+ *               event_id:
+ *                 type: integer
  *               name:
  *                 type: string
- *               eventId:
+ *               gpx:
  *                 type: string
+ *               color:
+ *                 type: string
+ *               enabled:
+ *                 type: boolean
  *     responses:
  *       201:
  *         description: Parcours créé avec succès
@@ -71,8 +77,16 @@ router.get('/event/:eventId', getTracksByEvent);
  *           schema:
  *             type: object
  *             properties:
+ *               event_id:
+ *                 type: integer
  *               name:
  *                 type: string
+ *               gpx:
+ *                 type: string
+ *               color:
+ *                 type: string
+ *               enabled:
+ *                 type: boolean
  *     responses:
  *       200:
  *         description: Parcours mis à jour

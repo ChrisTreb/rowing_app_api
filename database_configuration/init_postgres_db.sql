@@ -77,7 +77,6 @@ CREATE INDEX idx_track_event ON race_event_track(ret_event_id);
 CREATE TABLE race (
     ra_id SERIAL PRIMARY KEY,
     ra_event_id INTEGER NOT NULL REFERENCES race_event(re_id) ON DELETE CASCADE,
-
     ra_type TEXT NOT NULL,
     ra_name TEXT NOT NULL
 );
@@ -90,11 +89,9 @@ CREATE INDEX idx_race_event ON race(ra_event_id);
 CREATE TABLE race_participant (
     rp_id SERIAL PRIMARY KEY,
     rp_race_id INTEGER NOT NULL REFERENCES race(ra_id) ON DELETE CASCADE,
-
     rp_bib TEXT,
     rp_name TEXT,
     rp_color TEXT,
-
     rp_key TEXT NOT NULL,
     rp_updated_at TIMESTAMPTZ
 );

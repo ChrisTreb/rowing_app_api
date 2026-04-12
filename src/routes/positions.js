@@ -22,14 +22,14 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               participantId:
+ *               participant_id:
  *                 type: string
  *               latitude:
- *                 type: number
+ *                 type: double
  *               longitude:
- *                 type: number
+ *                 type: double
  *               timestamp:
- *                 type: string
+ *                 type: timpestamp
  *                 format: date-time
  *     responses:
  *       201:

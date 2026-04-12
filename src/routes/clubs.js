@@ -57,7 +57,7 @@ router.get('/:id', getClubById);
  *             properties:
  *               name:
  *                 type: string
- *               city:
+ *               nickname:
  *                 type: string
  *     responses:
  *       201:
@@ -87,7 +87,7 @@ router.post('/', createClub);
  *             properties:
  *               name:
  *                 type: string
- *               city:
+ *               nickname:
  *                 type: string
  *     responses:
  *       200:
