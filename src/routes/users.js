@@ -14,10 +14,10 @@ const router = express.Router();
  * /users:
  *   post:
  *    tags: [Users]
- *     summary: Créer un nouvel utilisateur
- *     responses:
- *       201:
- *         description: Utilisateur créé avec succès
+ *    summary: Créer un nouvel utilisateur
+ *    responses:
+ *      201:
+ *        description: Utilisateur créé avec succès
  */
 router.post('/', createUser);
 
@@ -25,7 +25,7 @@ router.post('/', createUser);
  * @swagger
  * /users:
  *   get:
- *   tags: [Users]
+ *     tags: [Users]
  *     summary: Récupérer tous les utilisateurs
  *     responses:
  *       200:

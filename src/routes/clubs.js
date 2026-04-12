@@ -26,7 +26,6 @@ router.get('/', getClubs);
  * /clubs/{id}:
  *   get:
  *     tags: [Clubs]
-
  *     summary: Récupérer un club par son ID
  *     parameters:
  *       - in: path
@@ -70,7 +69,7 @@ router.post('/', createClub);
  * @swagger
  * /clubs/{id}:
  *   put:
- *    tags: [Clubs]
+ *     tags: [Clubs]
  *     summary: Mettre à jour un club
  *     parameters:
  *       - in: path
