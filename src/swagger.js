@@ -1,7 +1,10 @@
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -225,7 +228,7 @@ const swaggerOptions = {
         },
         servers: [
             {
-                url: 'http://localhost:3000',
+                url: process.env.SERVER_URL,
             },
         ],
     },
@@ -238,13 +241,11 @@ export const swaggerDocs = (app, port) => {
     // URL dynamique
     swaggerSpec.servers = [
         {
-            url: `http://localhost:${port}`,
+            url: process.env.SERVER_URL,
         },
     ];
 
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-    console.log(swaggerSpec.paths);
-
-    console.log(`📚 Swagger disponible sur http://localhost:${port}/api-docs`);
+    console.log(`📚 Swagger disponible sur ${process.env.SWAGGER_URL}`);
 };
