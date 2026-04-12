@@ -15,6 +15,23 @@ const router = express.Router();
  *   post:
  *    tags: [Users]
  *    summary: Créer un nouvel utilisateur
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              googleId:
+ *                type: string
+ *              email:
+ *                type: string
+ *              apikey:
+ *                type: string
+ *              name:
+ *                type: string
+ *              rcId:
+ *                type: string
  *    responses:
  *      201:
  *        description: Utilisateur créé avec succès
