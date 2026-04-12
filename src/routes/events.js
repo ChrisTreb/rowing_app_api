@@ -37,12 +37,12 @@ const router = express.Router();
  *                 format: date
  *               latitude:
  *                 type: double
- *              longitude:
- *                type: double
- *              zoom:
- *                type: integer
- *              map_layer:
- *                type: string
+ *               longitude:
+ *                 type: double
+ *               zoom:
+ *                 type: integer
+ *               map_layer:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Événement créé avec succès
@@ -137,12 +137,12 @@ router.get('/:id/full', getFullEvent);
  *                 format: date-time
  *               latitude:
  *                 type: double
- *              longitude:
- *                type: double
- *              zoom:
- *                type: integer
- *              map_layer:
- *                type: string
+ *               longitude:
+ *                 type: double
+ *               zoom:
+ *                 type: integer
+ *               map_layer:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Événement mis à jour
