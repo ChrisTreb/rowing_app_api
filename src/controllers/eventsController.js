@@ -60,7 +60,7 @@ export const getEvents = async (req, res) => {
       SELECT re.*, u.usr_name
       FROM race_event re
       JOIN app_user u ON re.re_user_id = u.usr_id
-      ORDER BY re.re_start_at DESC
+      ORDER BY re.re_eventStartDateAndTime DESC
     `);
 
     res.json(result.rows);
@@ -83,9 +83,9 @@ export const getFullEvent = async (req, res) => {
       SELECT json_build_object(
         'event', json_build_object(
           'id', re.re_id,
-          'name', re.re_name,
-          'start_at', re.re_start_at,
-          'end_at', re.re_end_at
+          'name', re.re_eventName,
+          'start_at', re.re_eventStartDateAndTime,
+          'end_at', re.re_eventEndDateAndTime
         ),
         'races', COALESCE((
           SELECT json_agg(
@@ -176,13 +176,13 @@ export const updateEvent = async (req, res) => {
     const result = await pool.query(
       `UPDATE race_event SET
         re_name = $1,
-        re_visibility = $2,
-        re_start_at = $3,
-        re_end_at = $4,
-        re_latitude = $5,
-        re_longitude = $6,
-        re_zoom = $7,
-        re_map_layer = $8
+        re_eventVisibility = $2,
+        re_eventStartDateAndTime = $3,
+        re_eventEndDateAndTime = $4,
+        re_viewport_latitude = $5,
+        re_viewport_longitude = $6,
+        re_viewport_zoom = $7,
+        re_maplayer = $8
       WHERE re_id = $9
       RETURNING *`,
       [
