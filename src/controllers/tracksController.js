@@ -7,9 +7,9 @@ export const createTrack = async (req, res) => {
 
         const result = await pool.query(
             `INSERT INTO race_event_track 
-      (ret_re_id, ret_name, ret_xml_gpx, ret_color, ret_enabled)
-      VALUES ($1,$2,$3,$4,$5)
-      RETURNING *`,
+                (ret_re_id, ret_name, ret_xml_gpx, ret_color, ret_enabled)
+                VALUES ($1,$2,$3,$4,$5)
+                RETURNING *`,
             [event_id, name, gpx, color, enabled]
         );
 
@@ -53,14 +53,14 @@ export const getTracksWithRacesByEvent = async (req, res) => {
         const { id } = req.params;
         const result = await pool.query(
             `SELECT 
-        ret.*, 
-        (
-          SELECT json_agg(json_build_object('ra_id', ra_id, 'ra_type', ra_type, 'ra_name', ra_name))
-          FROM race
-          WHERE ra_event_id = $1
-        ) AS races
-        FROM race_event_track ret
-        WHERE ret_event_id = $1
+                ret.*, 
+                (
+                    SELECT json_agg(json_build_object('ra_id', ra_id, 'ra_type', ra_type, 'ra_name', ra_name))
+                    FROM race
+                    WHERE ra_event_id = $1
+                ) AS races
+                FROM race_event_track ret
+                WHERE ret_event_id = $1
       `, [id]
         );
         res.json(result.rows);
@@ -75,16 +75,14 @@ export const getTracksWithRacesAndParticipantsByEvent = async (req, res) => {
         const { id } = req.params;
         const result = await pool.query(
             `SELECT 
-        ret.*,
-        (
-          SELECT json_agg(json_build_object(
-            'ra_id', ra_id, 'ra_type', ra_type, 'ra_name', ra_name,
-            'participants', (
-              SELECT json_agg(json_build_object('rp_id', rp_id, 'rp_bib', rp_bib, 'rp_name', rp_name, 'rp_color', rp_color))
-             FROM race_participant WHERE rp_race_id = ra_id
-            )
-            )) 
-
+                ret.*,
+                (
+                SELECT json_agg(json_build_object(
+                    'ra_id', ra_id, 'ra_type', ra_type, 'ra_name', ra_name,
+                    'participants', (
+                    SELECT json_agg(json_build_object('rp_id', rp_id, 'rp_bib', rp_bib, 'rp_name', rp_name, 'rp_color', rp_color))
+                    FROM race_participant WHERE rp_race_id = ra_id
+                ))) 
         FROM race_event_track ret
         WHERE ret_event_id = $1
       `, [id]

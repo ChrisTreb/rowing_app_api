@@ -19,12 +19,6 @@ export const createEvent = async (req, res) => {
     const edit_token = crypto.randomBytes(16).toString('hex');
     const view_token = crypto.randomBytes(16).toString('hex');
 
-    if (visibility !== 0 && visibility !== 1) {
-      return res.status(400).json({
-        error: "visibility must be 0 or 1"
-      });
-    }
-
     const result = await pool.query(
       `INSERT INTO race_event (
         re_user_id, re_eventName, re_eventVisibility,

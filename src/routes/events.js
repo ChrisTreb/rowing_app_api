@@ -28,7 +28,7 @@ const router = express.Router();
  *               name:
  *                 type: string
  *               visiblity:
- *                 type: integer
+ *                 type: boolean
  *               start_at:
  *                 type: integer
  *               end_at:
@@ -126,7 +126,7 @@ router.get('/:id/full', getFullEvent);
  *               name:
  *                 type: string
  *               visiblity:
- *                 type: integer
+ *                 type: boolean
  *               start_at:
  *                 type: integer
  *               end_at:

@@ -39,7 +39,7 @@ CREATE TABLE race_event (
     re_id SERIAL PRIMARY KEY,
     re_user_id INTEGER NOT NULL REFERENCES app_user(usr_id) ON DELETE CASCADE,
     re_eventName TEXT NOT NULL,
-    re_eventVisibility INTEGER NOT NULL CHECK (re_eventVisibility IN (0,1)),
+    re_eventVisibility BOOLEAN DEFAULT TRUE,
     re_eventStartDateAndTime BIGINT NOT NULL,
     re_eventEndDateAndTime BIGINT NOT NULL,
     re_eventRandomId_edit TEXT NOT NULL UNIQUE,
@@ -60,11 +60,11 @@ CREATE INDEX idx_event_tokens ON race_event(re_eventRandomId_edit, re_eventRando
 ---------------------
 CREATE TABLE race_event_track (
     ret_id SERIAL PRIMARY KEY,
-    ret_re_id  INTEGER NOT NULL REFERENCES race_event(re_id) ON DELETE CASCADE,
+    ret_re_id INTEGER NOT NULL REFERENCES race_event(re_id) ON DELETE CASCADE,
     ret_name TEXT NOT NULL,
     ret_xml_gpx TEXT NOT NULL,
     ret_color TEXT NOT NULL,
-    ret_enabled INTEGER NOT NULL CHECK (ret_enabled IN (0,1))
+    ret_enabled BOOLEAN DEFAULT TRUE
 );
 
 CREATE INDEX idx_track_event ON race_event_track(ret_re_id);
