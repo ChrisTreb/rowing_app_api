@@ -15,7 +15,6 @@ CREATE TABLE rowing_club (
 ---------------------
 CREATE TABLE app_user (
     usr_id SERIAL PRIMARY KEY,
-    usr_email TEXT NOT NULL UNIQUE,
     usr_name TEXT,
     usr_apikey TEXT NOT NULL UNIQUE,
     usr_rc_id INTEGER NOT NULL REFERENCES rowing_club(rc_id) ON DELETE CASCADE
