@@ -10,7 +10,7 @@ export const createUser = async (req, res) => {
                 (usr_name, usr_apikey, usr_rc_id)
                 VALUES ($1, $2, $3)
                 RETURNING *`,
-            [email, name, apikey, rc_id]
+            [name, apikey, rc_id]
         );
 
         res.status(201).json(result.rows[0]);
@@ -50,7 +50,7 @@ export const getUserById = async (req, res) => {
 // UPDATE
 export const updateUser = async (req, res) => {
     try {
-        const { email, name, apikey, rc_id } = req.body;
+        const { name, apikey, rc_id } = req.body;
         const result = await pool.query(
             `UPDATE app_user SET
                 usr_name = $1,
@@ -58,7 +58,7 @@ export const updateUser = async (req, res) => {
                 usr_rc_id = $3
             WHERE usr_id = $4
             RETURNING *`,
-            [email, name, apikey, rc_id, req.params.id]
+            [name, apikey, rc_id, req.params.id]
         );
 
         if (result.rows.length === 0) {

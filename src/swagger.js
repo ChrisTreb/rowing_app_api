@@ -23,18 +23,19 @@ const swaggerOptions = {
                 User: {
                     type: 'object',
                     properties: {
-                        id: { type: 'string', example: 'u1' },
+                        rc_id: { type: 'string', example: '1' },
                         name: { type: 'string', example: 'John Doe' },
-                        email: { type: 'string', example: 'john@mail.com' }
+                        apikey: { type: 'string', example: 'AZER123' }
                     }
                 },
 
                 UserInput: {
                     type: 'object',
-                    required: ['name', 'email'],
+                    required: ['name', 'apikey', 'rc_id'],
                     properties: {
                         name: { type: 'string' },
-                        email: { type: 'string' }
+                        apikey: { type: 'string' },
+                        rc_id: {type: 'string'}
                     }
                 },
 

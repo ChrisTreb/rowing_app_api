@@ -19,9 +19,10 @@ Récupère tous les utilisateurs
 ```json
 [
   {
-    "usr_id": "uuid",
-    "usr_email": "test@example.com",
-    "usr_name": "John Doe"
+    "usr_id": "1",
+    "apikey": "AZER123",
+    "usr_name": "John Doe",
+    "rc_id": "4"
   }
 ]
 ```
@@ -42,8 +43,6 @@ Créer un utilisateur
 
 ```json
 {
-  "google_id": "google_123",
-  "email": "test@example.com",
   "name": "John Doe",
   "apikey": "secret",
   "rc_id": 1
@@ -97,7 +96,7 @@ Créer un événement
 
 ```json
 {
-  "user_id": "uuid",
+  "user_id": "1",
   "name": "Course Brest",
   "visibility": 1,
   "start_at": "2026-04-07T10:00:00Z",
@@ -135,7 +134,7 @@ Liste des parcours d’un événement
 
 ```json
 {
-  "event_id": "uuid",
+  "event_id": "1",
   "name": "Parcours 1",
   "gpx": "<xml>",
   "color": "#FF0000",
@@ -159,7 +158,7 @@ Liste des courses d’un événement
 
 ```json
 {
-  "event_id": "uuid",
+  "event_id": "1",
   "type": "final",
   "name": "Finale A"
 }
@@ -181,7 +180,7 @@ Liste des participants d’une course
 
 ```json
 {
-  "race_id": "uuid",
+  "race_id": "1",
   "bib": "12",
   "name": "Boat 1",
   "color": "#00FF00",
@@ -207,7 +206,7 @@ Ajoute une position GPS (tracking temps réel)
 
 ```json
 {
-  "participant_id": "uuid",
+  "participant_id": "1",
   "latitude": 48.39,
   "longitude": -4.48,
   "timestamp": "2026-04-07T10:00:00Z"
@@ -230,6 +229,6 @@ Ajoute une position GPS (tracking temps réel)
 
 # 🔐 Notes
 
-* Certains champs sont **uniques** (email, apikey)
-* Les IDs sont en **UUID**
+* Certains champs sont **uniques** (apikey)
+* Les IDs sont en **SERIAL**
 * Les relations sont en cascade (delete)
