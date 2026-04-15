@@ -8,7 +8,7 @@ export const createUser = async (req, res) => {
         const result = await pool.query(
             `INSERT INTO app_user 
        (usr_email, usr_name, usr_apikey, usr_rc_id)
-       VALUES ($1, $2, $3, $4, $5)
+       VALUES ($1, $2, $3, $4)
        RETURNING *`,
             [email, name, apikey, rc_id]
         );
