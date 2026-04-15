@@ -3,14 +3,14 @@ import { pool } from '../db.js';
 // CREATE
 export const createUser = async (req, res) => {
     try {
-        const { google_id, email, name, apikey, rc_id } = req.body;
+        const { email, name, apikey, rc_id } = req.body;
 
         const result = await pool.query(
             `INSERT INTO app_user 
-       (usr_google_id, usr_email, usr_name, usr_apikey, usr_rc_id)
-       VALUES ($1, $2, $3, $4, $5)
+       (usr_email, usr_name, usr_apikey, usr_rc_id)
+       VALUES ($1, $2, $3, $4, $5
        RETURNING *`,
-            [google_id, email, name, apikey, rc_id]
+            [email, name, apikey, rc_id]
         );
 
         res.status(201).json(result.rows[0]);
@@ -50,17 +50,16 @@ export const getUserById = async (req, res) => {
 // UPDATE
 export const updateUser = async (req, res) => {
     try {
-        const { google_id, email, name, apikey, rc_id } = req.body;
+        const { email, name, apikey, rc_id } = req.body;
         const result = await pool.query(
             `UPDATE app_user SET
-                usr_google_id = $1,
-                usr_email = $2,
-                usr_name = $3,
-                usr_apikey = $4,
-                usr_rc_id = $5
-            WHERE usr_id = $6
+                usr_email = $1,
+                usr_name = $2,
+                usr_apikey = $3,
+                usr_rc_id = $4
+            WHERE usr_id = $5
             RETURNING *`,
-            [google_id, email, name, apikey, rc_id, req.params.id]
+            [email, name, apikey, rc_id, req.params.id]
         );
 
         if (result.rows.length === 0) {

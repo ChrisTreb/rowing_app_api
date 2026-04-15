@@ -2,6 +2,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Session } from 'inspector';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -163,6 +164,23 @@ const swaggerOptions = {
                     }
                 },
 
+                /* ================= SESSIONS ================= */
+
+                SessionInput: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'string'},
+                        userId: { type: 'string' },
+                        expiresAt: { type: 'string' },
+                        sessions: {
+                            type: 'array',
+                            items: {
+                                $ref: '#/components/schemas/Session'
+                            }
+                        }
+                    }
+                },
+
                 /* ================= RELATIONS AVANCÉES ================= */
 
                 RaceWithParticipants: {
@@ -220,7 +238,6 @@ const swaggerOptions = {
                         }
                     }
                 }
-
             }
         },
         servers: [

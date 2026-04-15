@@ -22,8 +22,6 @@ const router = express.Router();
  *          schema:
  *            type: object
  *            properties:
- *              google_id:
- *                type: string
  *              email:
  *                type: string
  *              apikey:
@@ -82,8 +80,6 @@ router.get('/:id', getUserById);
  *         schema:
  *            type: object
  *            properties:
- *              google_id:
- *                type: string
  *              email:
  *                type: string
  *              apikey:

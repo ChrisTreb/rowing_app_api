@@ -1,4 +1,5 @@
 import { pool } from '../db.js';
+import crypto from 'crypto';
 
 // CREATE EVENT
 export const createEvent = async (req, res) => {
@@ -15,13 +16,23 @@ export const createEvent = async (req, res) => {
       map_layer
     } = req.body;
 
+    const edit_token = crypto.randomBytes(16).toString('hex');
+    const view_token = crypto.randomBytes(16).toString('hex');
+
+    if (visibility !== 0 && visibility !== 1) {
+      return res.status(400).json({
+        error: "visibility must be 0 or 1"
+      });
+    }
+
     const result = await pool.query(
       `INSERT INTO race_event (
-        re_user_id, re_name, re_visibility,
-        re_start_at, re_end_at,
-        re_latitude, re_longitude, re_zoom, re_map_layer
+        re_user_id, re_eventName, re_eventVisibility,
+        re_eventStartDateAndTime, re_eventEndDateAndTime,
+        re_eventRandomId_edit, re_eventRandomId_viewer,
+        re_viewport_latitude, re_viewport_longitude, re_viewport_zoom, re_maplayer
       )
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
       RETURNING *`,
       [
         user_id,
@@ -29,6 +40,8 @@ export const createEvent = async (req, res) => {
         visibility,
         start_at,
         end_at,
+        edit_token,
+        view_token,
         latitude,
         longitude,
         zoom,
@@ -63,18 +76,34 @@ export const getFullEvent = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!id || isNaN(id)) {
+      return res.status(400).json({ error: 'Invalid event id' });
+    }
+
     const result = await pool.query(
       `
       SELECT json_build_object(
-        'event', re,
-        'races', (
+        'event', json_build_object(
+          'id', re.re_id,
+          'name', re.re_name,
+          'start_at', re.re_start_at,
+          'end_at', re.re_end_at
+        ),
+        'races', COALESCE((
           SELECT json_agg(
             json_build_object(
-              'race', r,
-              'participants', (
+              'race', json_build_object(
+                'id', r.ra_id,
+                'name', r.ra_name
+              ),
+              'participants', COALESCE((
                 SELECT json_agg(
                   json_build_object(
-                    'participant', rp,
+                    'participant', json_build_object(
+                      'id', rp.rp_id,
+                      'name', rp.rp_name,
+                      'bib', rp.rp_bib
+                    ),
                     'last_position', (
                       SELECT json_build_object(
                         'lat', pos.rpp_latitude,
@@ -87,12 +116,12 @@ export const getFullEvent = async (req, res) => {
                       LIMIT 1
                     )
                   )
-                )
+                ), '[]')
                 FROM race_participant rp
                 WHERE rp.rp_race_id = r.ra_id
               )
             )
-          )
+          ), '[]')
           FROM race r
           WHERE r.ra_event_id = re.re_id
         )
@@ -108,6 +137,7 @@ export const getFullEvent = async (req, res) => {
     }
 
     res.json(result.rows[0].data);
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });

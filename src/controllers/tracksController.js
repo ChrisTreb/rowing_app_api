@@ -7,7 +7,7 @@ export const createTrack = async (req, res) => {
 
         const result = await pool.query(
             `INSERT INTO race_event_track 
-      (ret_event_id, ret_name, ret_gpx, ret_color, ret_enabled)
+      (ret_re_id, ret_name, ret_xml_gpx, ret_color, ret_enabled)
       VALUES ($1,$2,$3,$4,$5)
       RETURNING *`,
             [event_id, name, gpx, color, enabled]
