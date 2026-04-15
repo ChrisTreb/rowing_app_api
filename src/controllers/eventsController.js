@@ -74,6 +74,7 @@ export const getFullEvent = async (req, res) => {
   try {
     const { id } = req.params;
 
+    // 🔒 sécurité basique
     if (!id || isNaN(id)) {
       return res.status(400).json({ error: 'Invalid event id' });
     }
@@ -84,15 +85,21 @@ export const getFullEvent = async (req, res) => {
         'event', json_build_object(
           'id', re.re_id,
           'name', re.re_eventName,
+          'visibility', re.re_eventVisibility,
           'start_at', re.re_eventStartDateAndTime,
-          'end_at', re.re_eventEndDateAndTime
+          'end_at', re.re_eventEndDateAndTime,
+          'latitude', re.re_viewport_latitude,
+          'longitude', re.re_viewport_longitude,
+          'zoom', re.re_viewport_zoom,
+          'map_layer', re.re_maplayer
         ),
         'races', COALESCE((
           SELECT json_agg(
             json_build_object(
               'race', json_build_object(
                 'id', r.ra_id,
-                'name', r.ra_name
+                'name', r.ra_name,
+                'type', r.ra_type
               ),
               'participants', COALESCE((
                 SELECT json_agg(
@@ -100,7 +107,8 @@ export const getFullEvent = async (req, res) => {
                     'participant', json_build_object(
                       'id', rp.rp_id,
                       'name', rp.rp_name,
-                      'bib', rp.rp_bib
+                      'bib', rp.rp_bib,
+                      'color', rp.rp_color
                     ),
                     'last_position', (
                       SELECT json_build_object(
@@ -114,15 +122,15 @@ export const getFullEvent = async (req, res) => {
                       LIMIT 1
                     )
                   )
-                ), '[]')
+                )
                 FROM race_participant rp
                 WHERE rp.rp_race_id = r.ra_id
-              )
+              ), '[]')
             )
-          ), '[]')
+          )
           FROM race r
           WHERE r.ra_event_id = re.re_id
-        )
+        ), '[]')
       ) AS data
       FROM race_event re
       WHERE re.re_id = $1
@@ -130,14 +138,14 @@ export const getFullEvent = async (req, res) => {
       [id]
     );
 
-    if (result.rows.length === 0) {
+    if (result.rows.length === 0 || !result.rows[0].data) {
       return res.status(404).json({ error: 'Event not found' });
     }
 
     res.json(result.rows[0].data);
 
   } catch (err) {
-    console.error(err);
+    console.error('getFullEvent error:', err);
     res.status(500).json({ error: err.message });
   }
 };
