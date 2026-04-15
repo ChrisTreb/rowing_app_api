@@ -16,6 +16,9 @@ export const createEvent = async (req, res) => {
       map_layer
     } = req.body;
 
+    const safeVisibility =
+      visibility === undefined ? true : Boolean(visibility);
+
     const edit_token = crypto.randomBytes(16).toString('hex');
     const view_token = crypto.randomBytes(16).toString('hex');
 
@@ -31,7 +34,7 @@ export const createEvent = async (req, res) => {
       [
         user_id,
         name,
-        visibility,
+        safeVisibility,
         start_at,
         end_at,
         edit_token,
@@ -44,6 +47,7 @@ export const createEvent = async (req, res) => {
     );
 
     res.status(201).json(result.rows[0]);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
