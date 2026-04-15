@@ -3,13 +3,13 @@ import { pool } from '../db.js';
 // CREATE
 export const createUser = async (req, res) => {
     try {
-        const { email, name, apikey, rc_id } = req.body;
+        const { name, apikey, rc_id } = req.body;
 
         const result = await pool.query(
             `INSERT INTO app_user 
-       (usr_name, usr_apikey, usr_rc_id)
-       VALUES ($1, $2, $3)
-       RETURNING *`,
+                (usr_name, usr_apikey, usr_rc_id)
+                VALUES ($1, $2, $3)
+                RETURNING *`,
             [email, name, apikey, rc_id]
         );
 
