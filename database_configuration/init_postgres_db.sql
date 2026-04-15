@@ -25,7 +25,7 @@ CREATE TABLE app_user (
 -- 3. SESSIONS
 ---------------------
 CREATE TABLE session (
-    se_id pgp_uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    se_id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
     se_user_id INTEGER NOT NULL REFERENCES app_user(usr_id) ON DELETE CASCADE,
     se_expires_at BIGINT NOT NULL
 );
