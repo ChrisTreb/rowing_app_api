@@ -3,14 +3,16 @@ import { pool } from '../db.js';
 // CREATE
 export const createParticipant = async (req, res) => {
     try {
+        const updated_at = Date.now();
+
         const { race_id, bib, name, color, key } = req.body;
 
         const result = await pool.query(
             `INSERT INTO race_participant
-      (rp_race_id, rp_bib, rp_name, rp_color, rp_key)
-      VALUES ($1,$2,$3,$4,$5)
-      RETURNING *`,
-            [race_id, bib, name, color, key]
+                (rp_race_id, rp_bib, rp_name, rp_color, rp_key, rp_updated_at)
+                VALUES ($1,$2,$3,$4,$5,$6)
+                RETURNING *`,
+            [race_id, bib, name, color, key, updated_at]
         );
 
         res.status(201).json(result.rows[0]);
