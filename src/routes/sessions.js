@@ -20,13 +20,13 @@ const router = express.Router();
  *       required: true
  *       content:
  *         application/json:
- *         schema:
- *           type: object
- *           properties:
- *            user_id:
- *              type: integer
- *           expires_at:
- *             type: string
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user_id:
+ *                 type: integer
+ *               expires_at:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Session créée avec succès
